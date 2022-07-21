@@ -21,6 +21,9 @@
 - [x] Gerando figurinhas para Whatsapp
 - [x] Ligando as pontas, refatoração e orientação a objetos
 
+<a name="objetivo"><h2>Objetivos do Projeto</h2></a>
+<p>Construir uma aplicação do zero, compreender como aperfeiçoar o código, utilizar banco de dados NoSQL, tornar a aplicação acessível e agregar ao portfólio</p>
+
 <img src= "https://img.shields.io/github/issues/mayumisiano/imersaojava">
 <img src= "https://img.shields.io/github/forks/mayumisiano/imersaojava">
 <img src= "https://img.shields.io/github/stars/mayumisiano/imersaojava">
