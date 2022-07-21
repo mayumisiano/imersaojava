@@ -1,45 +1,40 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {    
 
-        //Fazer uma conexão HTTP e buscar os top 250 filmes
-        //String url= "https://imdb-api.com/en/API/Top250Movies/k_k0mmr83v";
+        //Fazer uma conexão HTTP e buscar os top 250 filmes        
+        //String url = "https://api.mocki.io/v2/549a5d8b"; 
 
-        String url = "https://api.mocki.io/v2/549a5d8b"; 
-        URI endereco = URI.create(url);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String body = response.body();
+        //String url= "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/TopMovies.json";
+        //ExtratorDeConteudo extrator = new ExtratorDeConteudoDoIMDB();
+
+        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/NASA-APOD.json";
+        ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
         
-        //Extrair os dados que interessam (título, poster, classificação etc.)
-        var parser = new JsonParser();
-        List<Map<String, String>> listaDeFilmes = parser.parse(body);
+        var http = new ClienteHttp();
+        String json = http.buscaDados(url);        
         
-        //Exibir e manipular dados
+        //Exibir e manipular dados        
+        List<Conteudo> conteudos = extrator.extraiConteudos(json);
+        
         var geradora = new GeradoraDeFigurinhas();
-        for (Map<String,String> filme : listaDeFilmes) {
 
-            String urlImagem = filme.get("image");
-            String nomeFilme = filme.get("title");
+        for(int i = 0; i < 3; i++) {
 
-            InputStream inputStream = new URL(urlImagem).openStream();
-            
-            String nomeArquivo = nomeFilme.replace(":", "-")  + ".png";
-            
-            geradora.cria(inputStream, nomeArquivo);
-            
-            System.out.println(nomeFilme);
-            System.out.println(filme.get("imDbRating"));
+            Conteudo conteudo = conteudos.get(i);    
+                        
+            InputStream inputStream = new URL(conteudo.getUrlImagem()).openStream(); 
+
+            String nomeArquivo = "../saida/" + conteudo.getTitulo().replace(":", "-") + ".png";
+
+            geradora.cria(inputStream, nomeArquivo); 
+                       
+            System.out.println(conteudo.getTitulo()); 
+            System.out.println();                       
+            }
         }
     }
-}
+

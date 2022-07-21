@@ -15,7 +15,7 @@ public class GeradoraDeFigurinhas {
 
         //InputStream inputStream = new URL("https://imersao-java-apis.s3.amazonaws.com///TopMovies_1.jpg").openStream();
         
-        BufferedImage imagemOriginal = ImageIO.read(new File("../entrada/filme-maior.jpg"));
+        BufferedImage imagemOriginal = ImageIO.read(inputStream);
 
         //cria nova imagem em memória com transparência e tamanho novo;
         int largura = imagemOriginal.getWidth();
@@ -36,7 +36,7 @@ public class GeradoraDeFigurinhas {
         graphics.drawString("TOPZERA", 120, novaAltura-100);
 
         //escrever imagem em um arquivo.
-        ImageIO.write(novaImagem, "png", new File("../saida/figurinha.png"));        
+        ImageIO.write(novaImagem, "png", new File(nomeArquivo));        
     }
 }
 
